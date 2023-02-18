@@ -16,7 +16,10 @@ class UploadController extends Controller
      */
     public function index(): Response
     {
-        //
+        $uploads=Upload::all();
+        return response(
+            view('download')->with('uploads',$uploads)
+        );
     }
 
     /**
@@ -52,9 +55,13 @@ class UploadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Upload $upload): Response
+    public function show(Upload $upload)//: Response
     {
-        //
+        if(Storage::disk('local')->exists($upload->path)){
+            return Storage::download($upload->path,$upload->name);
+        }else{
+            return response('File doesnt exist');
+        }
     }
 
     /**

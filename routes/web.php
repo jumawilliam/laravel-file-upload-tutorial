@@ -18,3 +18,9 @@ Route::get('/', function () {
 });
 
 Route::resource('/uploads', UploadController::class);
+
+Route::get('/clearcache',function(){
+    $command=Artisan::call('optimize:clear');
+    dd('All cache cleared');
+
+});
